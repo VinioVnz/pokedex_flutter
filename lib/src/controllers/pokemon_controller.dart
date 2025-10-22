@@ -12,12 +12,14 @@ class PokemonController extends ChangeNotifier {
   bool get loading => _loading;
 
   Future<void> getPokemon(String name) async {
-
+    if(name.isEmpty){
+      return;
+    }
     _loading = true;
     notifyListeners();
 
     _pokemon = await _service.getPokemon(name);
-
+    print("IMAGE:${_pokemon!.sprite}");
     _loading = false;
     notifyListeners();
   }

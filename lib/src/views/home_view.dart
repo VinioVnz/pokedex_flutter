@@ -11,12 +11,13 @@ class HomeView extends StatefulWidget {
 }
 
 void _searchPokemon() async {}
- TextEditingController _inputController = TextEditingController();
+TextEditingController _inputController = TextEditingController();
+
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     PokemonController _controller = Provider.of<PokemonController>(context);
-   
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Pokedex'),
@@ -36,20 +37,24 @@ class _HomeViewState extends State<HomeView> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(height: 10),
             _controller.loading
                 ? CircularProgressIndicator()
                 : ElevatedButton(
-                    onPressed: () => _controller.getPokemon(_inputController.text.trim()),
+                    onPressed: () =>
+                        _controller.getPokemon(_inputController.text.trim()),
                     child: Text('Buscar'),
                   ),
-            const SizedBox(height: 10,),
-            
-            if(_controller.pokemon != null)...[
-              CardPokemon(pokemon: _controller.pokemon!)
-            ] else if(_controller.pokemon == null)...[
-              Text('Pokemon não encontrado! tente novamente')
-            ]
+            const SizedBox(height: 10),
+
+            if (_controller.pokemon != null) ...[
+              CardPokemon(pokemon: _controller.pokemon!),
+              
+            ] else if (_controller.pokemon == null &&
+                _inputController.text.isNotEmpty &&
+                !_controller.loading) ...[
+              Text('Pokemon não encontrado! tente novamente'),
+            ],
           ],
         ),
       ),

@@ -10,7 +10,7 @@ class PokemonService {
     final response = await http.get(Uri.parse('$baseUrl/$name'));
 
     if(response.statusCode != 200){
-      throw Exception('Pokemon não encontrado');
+throw Exception('Pokemon não encontrado');
     }
     final data = jsonDecode(response.body);
 
