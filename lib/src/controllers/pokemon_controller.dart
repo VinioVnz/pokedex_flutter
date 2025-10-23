@@ -6,10 +6,11 @@ class PokemonController extends ChangeNotifier {
   final PokemonService _service = PokemonService();
 
   PokemonModel? _pokemon;
+  String? _description;
   bool _loading = false;
-
   PokemonModel? get pokemon => _pokemon;
   bool get loading => _loading;
+  String? get description => _description;
 
   Future<void> getPokemon(String name) async {
     if(name.isEmpty){
@@ -19,8 +20,12 @@ class PokemonController extends ChangeNotifier {
     notifyListeners();
 
     _pokemon = await _service.getPokemon(name);
-    print("IMAGE:${_pokemon!.sprite}");
+    _description = await _service.getPokemonDesc(name);
+    //print('DESCRICAO: $_description');
+    //print("IMAGE:${_pokemon!.sprite}");
     _loading = false;
     notifyListeners();
   }
+
+  
 }

@@ -1,51 +1,86 @@
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon/src/models/pokemon_model.dart';
 
 class CardPokemon extends StatelessWidget {
   final PokemonModel pokemon;
-
-  const CardPokemon({super.key, required this.pokemon});
+  final String description;
+  const CardPokemon({
+    super.key,
+    required this.pokemon,
+    required this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
     List<String> tipos = pokemon.types;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Text(
-              pokemon.name.toUpperCase(),
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: _getTypeColor(tipos[0]),
-              ),
-            ),
-            SizedBox(height: 10),
+    Color mainColor = _getTypeColor(tipos[0]);
+    return FlipCard(
+      direction: FlipDirection.HORIZONTAL,
 
-            //Image.network(pokemon.sprite, height: 120, fit: BoxFit.contain),
-            Image(
-              image: NetworkImage(pokemon.sprite),
-              height: 120,
-              fit: BoxFit.contain,
-            ),
-            SizedBox(height: 10),
-            for (var tipo in pokemon.types) ...[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Tipo(s): $tipo',
-                    style: TextStyle(color: _getTypeColor(tipo)),
+      //parte da frente
+      front: SizedBox(
+        width: 200,
+        height: 300,
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusGeometry.circular(8),
+            side: BorderSide(color: mainColor, width: 2),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Text(
+                  pokemon.name.toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: _getTypeColor(tipos[0]),
                   ),
-                  Icon(_getTypeIcon(tipo), color: _getTypeColor(tipo)),
+                ),
+                SizedBox(height: 10),
+
+                //Image.network(pokemon.sprite, height: 120, fit: BoxFit.contain),
+                Image(
+                  image: NetworkImage(pokemon.sprite),
+                  height: 120,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(height: 10),
+                for (var tipo in pokemon.types) ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Tipo(s): $tipo',
+                        style: TextStyle(color: _getTypeColor(tipo)),
+                      ),
+                      Icon(_getTypeIcon(tipo), color: _getTypeColor(tipo)),
+                    ],
+                  ),
                 ],
-              ),
-            ],
-            Text('Altura: ${pokemon.height} cm'),
-            Text('Peso: ${pokemon.weight} kg'),
-          ],
+                Text('Altura: ${pokemon.height} cm'),
+                Text('Peso: ${pokemon.weight} kg'),
+              ],
+            ),
+          ),
+        ),
+      ),
+
+      //parte de tras da carta
+      back: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(8),
+          side: BorderSide(color: mainColor, width: 2),
+        ),
+        child: SizedBox(
+          width: 200,
+          height: 300,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Center(child: Text(description,textAlign: TextAlign.justify)),
+          ),
         ),
       ),
     );

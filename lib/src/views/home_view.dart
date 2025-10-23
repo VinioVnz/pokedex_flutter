@@ -48,7 +48,7 @@ class _HomeViewState extends State<HomeView> {
             const SizedBox(height: 10),
 
             if (_controller.pokemon != null) ...[
-              CardPokemon(pokemon: _controller.pokemon!),
+              CardPokemon(pokemon: _controller.pokemon!, description: _controller.description!,),
               
             ] else if (_controller.pokemon == null &&
                 _inputController.text.isNotEmpty &&
