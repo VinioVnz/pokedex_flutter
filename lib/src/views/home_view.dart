@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon/src/controllers/pokemon_controller.dart';
 import 'package:pokemon/src/widgets/card_pokemon.dart';
+import 'package:pokemon/src/widgets/styled_text_field.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
@@ -29,20 +30,17 @@ class _HomeViewState extends State<HomeView> {
         padding: EdgeInsetsGeometry.all(8),
         child: Column(
           children: [
-            TextField(
-              controller: _inputController,
-              decoration: InputDecoration(
-                label: Text('Escreva o nome de um pokemon!'),
-                hintText: 'Ex: Pikachu',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            StyledTextField(textEditingController: _inputController),
             const SizedBox(height: 10),
             _controller.loading
                 ? CircularProgressIndicator()
                 : ElevatedButton(
                     onPressed: () =>
                         _controller.getPokemon(_inputController.text.trim()),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white
+                    ),
                     child: Text('Buscar'),
                   ),
             const SizedBox(height: 10),

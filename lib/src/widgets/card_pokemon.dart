@@ -41,12 +41,12 @@ class CardPokemon extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
 
-                //Image.network(pokemon.sprite, height: 120, fit: BoxFit.contain),
-                Image(
+                Image.network(pokemon.sprite, height: 120, fit: BoxFit.contain),
+                /* Image(
                   image: NetworkImage(pokemon.sprite),
                   height: 120,
                   fit: BoxFit.contain,
-                ),
+                ), */
                 SizedBox(height: 10),
                 for (var tipo in pokemon.types) ...[
                   Row(
